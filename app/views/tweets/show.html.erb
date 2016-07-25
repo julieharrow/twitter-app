@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<div class="pull-right">
+  <%= image_tag @tweet.user.avatar.url(:thumb) %>
+</div>
+<p> <strong><%= @tweet.user.username %></strong> tweets: <strong><%= @tweet.message %></strong> </p>
+<div>
+  <%= image_tag @tweet.pic.url(:medium) %>
+</div>
+
+<%= link_to 'Back', tweets_path, class:"btn btn-default"%>
+<%= link_to 'Edit', edit_tweet_path(@tweet), class:"btn btn-warning" %>
+<!-- # We use a singular path because we are referring to a single tweet.  Always true except for the create action, which takes the plural form of tweets in the path. -->
+<%= link_to 'Delete', @tweet, method: :delete, class:"btn btn-danger", data: { confirm: 'Are you sure?' }%>

@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+<!-- # the above is just a necessary line in order to display any "completion" or "error" notice text as build in the controllers -->
+<h1>Twitter Feed</h1>
+
+<% @t.each do |tweet| %>
+  <div class="list-group">
+    <a href=<%= tweet_path(tweet) %> class="list-group-item">
+      <h4 class="list-group-item-heading"><%= tweet.user.name %> <span class = "username-text"><%= tweet.user.username %></span></h4>
+      <p class="list-group-item-text"><%= tweet.message %></p>
+      <a class="list-group-item-text"><%= image_tag tweet.pic.url %></a>
+    </a>
+  </div>
+<% end %>

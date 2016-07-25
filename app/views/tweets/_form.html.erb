@@ -1,0 +1,31 @@
+<%= form_for(@tweet) do |f| %>
+  <% if @tweet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
+
+      <ul>
+        <% @tweet.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.text_field :message, placeholder: "Your tweet here", size: 140%>
+  </div>
+
+  <div class="form-group">
+   <%= f.label "Tweet Image: " %><br />
+   <%= f.file_field :pic%>
+ </div>
+
+  <div class="form-group cant-see-me">
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id, value: current_user.id %>
+  </div>
+  <!-- # the following represents the submission - rails does not allow us to see that code - if I don't add the "Tweet!" then it will assume the following button label:  Submit Tweet " -->
+  <div class="actions">
+    <%= f.submit "Tweet!", class:"btn btn-success" %>
+  </div>
+<% end %>
