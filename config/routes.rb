@@ -12,5 +12,4 @@ Rails.application.routes.draw do
   put 'tweets/:id' => 'tweets#update' # put creates a new object
   patch 'tweets/:id' => 'tweets#update' # patch updates preexisting object
   delete 'tweets/:id' => 'tweets#destroy'
-
 end

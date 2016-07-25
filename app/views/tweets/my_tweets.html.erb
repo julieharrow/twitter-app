@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+<!-- # the above is just a necessary line in order to display any "completion" or "error" notice text as build in the controllers -->
+
+<% @user.tweets.each do |tweet| %>
+  <div class="list-group col-md-8">
+    <a href=<%= tweet_path(tweet) %> class="list-group-item">
+      <div class="row">
+        <div class="col-md-2">
+          <% if tweet.user.avatar.exists? %>
+            <%= image_tag tweet.user.avatar.url, class:"img-rounded img-responsive avatar-thumbs"%>
+          <% else %>
+            <%= image_tag "avatar_placeholder.jpg", class:"img-rounded img-responsive avatar-thumbs"%>
+          <% end %>
+        </div>
+        <div class="col-md-8">
+          <h4 class="list-group-item-heading"><%= tweet.user.name %> <span class = "username-text"><%= tweet.user.username %></span></h4>
+          <p class="list-group-item-text">
+          <%= tweet.message %>
+          <% if tweet.pic.exists? %>
+             <br /><br /><%= image_tag tweet.pic.url, class:"img-responsive img-rounded"%>
+          <% end %>
+          </p>
+        </div>
+      </div>
+    </a>
+  </div>
+<% end %>
