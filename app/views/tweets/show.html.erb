@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<div class="pull-right">
-  <%= image_tag @tweet.user.avatar.url(:thumb) %>
-</div>
+
 <p> <strong><%= @tweet.user.username %></strong> tweets: <strong><%= @tweet.message %></strong> </p>
 <div>
-  <%= image_tag @tweet.pic.url(:medium) %>
+  <% if @tweet.pic.exists? %>
+     <%= image_tag @tweet.pic.url(:medium) %></p>
+  <% end %>
 </div>
 
 <%= link_to 'Back', tweets_path, class:"btn btn-default"%>
