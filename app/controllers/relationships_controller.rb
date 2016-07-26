@@ -11,7 +11,13 @@ class RelationshipsController < ApplicationController
     else
       redirect_to request.referrer, notice: "Unable to follow."
     end
-    
+
+  end
+
+  def destroy
+    @relationship = current_user.relationships.find(params[:id])
+    @relationship.destroy
+    redirect_to request.referrer, notice: "No longer following."
   end
 
 end

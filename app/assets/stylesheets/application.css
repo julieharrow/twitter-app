@@ -28,8 +28,21 @@ body {
   font-size: 16px;
 }
 
+.profile-header {
+  margin-bottom:100px;
+}
+
+.profile-banner {
+  background-color:#FCD3DE;
+  max-height:20px;
+}
+
 .avatar-thumbs {
   max-width: 80px;
+}
+
+.avatar-profile {
+  max-width: 200px;
 }
 
 .twitter-button {
@@ -37,9 +50,20 @@ body {
   margin-right:35px;
 }
 
+.follow-button {
+  background-color:#FCD3DE;
+  margin-top:10px;
+}
+
 .username-text {
   color:gray;
   font-style: italic;
   font-weight: lighter;
+  font-size: 14px;
+}
+
+.timestamp-text {
+  color:gray;
+  font-weight: normal;
   font-size: 14px;
 }

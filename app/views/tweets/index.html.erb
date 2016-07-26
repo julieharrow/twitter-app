@@ -13,7 +13,7 @@
           <% end %>
         </div>
         <div class="col-md-8">
-          <h4 class="list-group-item-heading"><%= tweet.user.name %> <span class = "username-text"><%= tweet.user.username %></span></h4>
+          <h4 class="list-group-item-heading"><%= tweet.user.name.titleize %> <span class = "username-text"><%= tweet.user.username.downcase %></span></h4>
           <p class="list-group-item-text">
           <%= tweet.message %>
           <% if tweet.pic.exists? %>
