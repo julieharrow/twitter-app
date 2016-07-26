@@ -4,6 +4,7 @@ class TweetsController < ApplicationController
 
   def index
     @t = Tweet.all
+    @tweet = Tweet.new
     # define your array of tweets as anything you want - usable in the index page
   end
 

@@ -1,9 +1,13 @@
 <p id="notice"><%= notice %></p>
 <!-- # the above is just a necessary line in order to display any "completion" or "error" notice text as build in the controllers -->
 
-<% @t.each do |tweet| %>
+<div class="tweet-container">
+  <%= render 'form' %>
+</div>
+
+<% @t.reverse.each do |tweet| %>
   <div class="list-group col-md-8">
-    <a href="<%= tweet_path(tweet) %>" class="list-group-item">
+    <div href="<%= tweet_path(tweet) %>" class="list-group-item">
       <div class="row">
         <div class="col-md-2">
           <% if tweet.user.avatar.exists? %>
@@ -22,6 +26,6 @@
           </p>
         </div>
       </div>
-    </a>
+    </div>
   </div>
 <% end %>

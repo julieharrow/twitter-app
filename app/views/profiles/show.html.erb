@@ -12,28 +12,25 @@
     </div>
     <% if @user==current_user %>
       <%= link_to "Edit Profile", edit_user_registration_path, class:"btn btn-default pull-right" %>
-    <% elsif current_user != @user && !current_user.friends.include?(@user)  %>
-      <%= link_to "Follow #{@user.username}", relationships_path(friend_id: @user), method: :post, class:"btn btn-default follow-button username-text pull-right" %>
-    <% elsif current_user != @user && current_user.friends.include?(@user) %>
-      <%= link_to "Unfollow #{@user.username}", relationship_path(current_user.relationships.find_by_friend_id(@user)), method: :delete, class:"btn btn-default follow-button username-text pull-right" %>
     <% end %>
     <br /><br />
 
-    <h4 class="list-group-item-heading"><%= @user.name.titleize %> <br /><span class = "username-text"><%= @user.username.downcase %></span><br /><br /><span class = "timestamp-text"><%= @user.created_at.strftime("Joined %m/%d/%Y") %></span></h4>
+    <h4 class="list-group-item-heading"><%= @user.name.titleize %> <br /><span class = "username-text"><%= @user.username.downcase %></span><br /><br /><span class = "timestamp-text"><%= @user.created_at.strftime("Joined %B %Y") %></span></h4>
   </div>
 </div>
 <div class="jumbotron profile-banner">
   <div class = "col-md-4">
+    <% if current_user != @user && !current_user.friends.include?(@user)  %>
+      <%= link_to "Follow #{@user.username}", relationships_path(friend_id: @user), method: :post, class:"btn btn-default username-text pull-right" %>
+    <% elsif current_user != @user && current_user.friends.include?(@user) %>
+      <%= link_to "Unfollow #{@user.username}", relationship_path(current_user.relationships.find_by_friend_id(@user)), method: :delete, class:"btn btn-default username-text pull-right" %>
+    <% end %>
   </div>
   <div class = "col-md-2">
     <h4>Following: <%= @user.relationships.size %></h4>
   </div>
   <div class = "col-md-2">
     <h4>Tweets: <%= @user.tweets.size %></h4>
-  </div>
-  <div class = "col-md-2">
-    <h4>Followers: <%= @user.relationships.where(find_by_friend==@user).size %></h4>
-    user.followers(order: 'updated_at DESC').select{|f| f.user.present? }.count
   </div>
 </div>
 
