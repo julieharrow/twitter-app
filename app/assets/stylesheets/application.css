@@ -22,13 +22,6 @@ body {
   display:none;
 }
 
-.username-text {
-  color:gray;
-  font-style: italic;
-  font-weight: lighter;
-  font-size: 14px;
-}
-
 .nav-override {
   height: 80px;
   padding: 15px 15px;
@@ -37,4 +30,16 @@ body {
 
 .avatar-thumbs {
   max-width: 80px;
+}
+
+.twitter-button {
+  background-color:#FCD3DE;
+  margin-right:35px;
+}
+
+.username-text {
+  color:gray;
+  font-style: italic;
+  font-weight: lighter;
+  font-size: 14px;
 }

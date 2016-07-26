@@ -1,6 +1,12 @@
 <p id="notice"><%= notice %></p>
 <!-- # the above is just a necessary line in order to display any "completion" or "error" notice text as build in the controllers -->
 
+<h3><%= @user.name.titleize %>'s Profile </h3>
+<% if current_user != @user %>
+  <%= link_to "Follow #{@user.username}", relationships_path(friend_id: @user), method: :post, class:"btn btn-default twitter-button username-text" %>
+<% end %>
+
+
 <% @user.tweets.each do |tweet| %>
   <div class="list-group col-md-8">
     <a href=<%= tweet_path(tweet) %> class="list-group-item">

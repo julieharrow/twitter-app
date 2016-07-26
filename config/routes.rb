@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+
+  # devise path line of code
   devise_for :users
+
+  # root path
   root 'tweets#index'
 
   # all of the paths below would typically have been defined through the call 'resources: tweets' on the tweets controller, however we did not use that shortcut to learn the code behind the scenes
-
   post 'tweets' => 'tweets#create'  #actually creates the tweet by sending the params to the server
   get 'tweets/new' => 'tweets#new', as: 'new/tweet' #needs to be redefined due to rails default path nomenclature - this is referred to as the 'alias'
   get 'tweets/:id' => 'tweets#show', as: :tweet #needs to be redefined due to rails default path nomenclature - this is referred to as the 'alias'
@@ -12,4 +15,12 @@ Rails.application.routes.draw do
   put 'tweets/:id' => 'tweets#update' # put creates a new object
   patch 'tweets/:id' => 'tweets#update' # patch updates preexisting object
   delete 'tweets/:id' => 'tweets#destroy'
+
+  # here are the paths for specific user profiles/a list of all users
+  get "profiles/:id" => "profiles#show", as: :profile
+  get "profiles" => "profiles#index"
+
+  # relationships routes made automatically via rails
+  resources :relationships
+
 end
