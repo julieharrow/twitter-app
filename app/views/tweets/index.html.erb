@@ -5,27 +5,34 @@
   <%= render 'form' %>
 </div>
 
-<% @t.reverse.each do |tweet| %>
-  <div class="list-group col-md-8">
-    <div href="<%= tweet_path(tweet) %>" class="list-group-item">
-      <div class="row">
-        <div class="col-md-2">
-          <% if tweet.user.avatar.exists? %>
-            <%= link_to image_tag(tweet.user.avatar.url, class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
-          <% else %>
-            <%= link_to image_tag("avatar_placeholder.jpg", class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
-          <% end %>
-        </div>
-        <div class="col-md-8">
-          <h4 class="list-group-item-heading"><%= tweet.user.name.titleize %> <span class = "username-text"><%= tweet.user.username.downcase %></span></h4>
-          <p class="list-group-item-text">
-          <%= tweet.message %>
-          <% if tweet.pic.exists? %>
-             <br /><br /><%= image_tag tweet.pic.url, class:"img-responsive img-rounded"%>
-          <% end %>
-          </p>
+<div class = "multi-tweet-container">
+  <% @t.reverse.each do |tweet| %>
+    <div class="list-group">
+      <div href=<%= tweet_path(tweet) %> class="list-group-item">
+        <div class="row">
+          <div class="col-md-2">
+            <% if tweet.user.avatar.exists? %>
+              <%= link_to image_tag(tweet.user.avatar.url, class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
+            <% else %>
+              <%= link_to image_tag("avatar_placeholder.jpg", class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
+            <% end %>
+          </div>
+          <div class="col-md-10">
+            <h4 class="list-group-item-heading"><%= tweet.user.name %> <span class = "username-text"><%= tweet.user.username %></span></h4>
+            <p class="list-group-item-text">
+              <%= link_to tweet.message, tweet_path(tweet)  %>
+              <% if current_user.likes?(tweet)%>
+                <%= link_to "Unlike", tweet_like_path(tweet), method: :delete, class: "like-button pull-right btn btn-success" %><br /><br />
+              <% else %>
+                <%= link_to "Like", tweet_like_path(tweet), method: :post, class: "like-button pull-right btn btn-default" %><br /><br />
+              <% end %>
+              <% if tweet.pic.exists? %>
+                 <br /><br /><%= image_tag tweet.pic.url, class:"img-responsive img-rounded"%>
+              <% end %>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

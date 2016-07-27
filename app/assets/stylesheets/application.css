@@ -22,8 +22,16 @@ body {
   display:none;
 }
 
+.multi-tweet-container {
+  max-width:800px;
+}
+
 .tweet-container {
   margin-bottom:30px;
+}
+
+.like-button {
+  margin:5px;
 }
 
 .nav-override {

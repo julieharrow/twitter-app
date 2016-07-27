@@ -15,7 +15,8 @@
     <% end %>
     <br /><br />
 
-    <h4 class="list-group-item-heading"><%= @user.name.titleize %> <br /><span class = "username-text"><%= @user.username.downcase %></span><br /><br /><span class = "timestamp-text"><%= @user.created_at.strftime("Joined %B %Y") %></span></h4>
+    <h3 class="list-group-item-heading"><%= @user.name.titleize %> <br /><span class = "username-text"><%= @user.username.downcase %></span><br /><br /><span class = "timestamp-text"><%= @user.created_at.strftime("Joined %B %Y") %></span></h3>
+    <div class=" container list-group-item-text"> <%= @user.bio %> </div>
   </div>
 </div>
 <div class="jumbotron profile-banner">
@@ -27,32 +28,46 @@
     <% end %>
   </div>
   <div class = "col-md-2">
-    <h4>Following: <%= @user.relationships.size %></h4>
+    <%= @user.relationships.count %> Following
   </div>
   <div class = "col-md-2">
-    <h4>Tweets: <%= @user.tweets.size %></h4>
+    <%= pluralize(@user.tweets.count, "Tweet") %>
   </div>
+  <div class = "col-md-2">
+    <%= pluralize(@user.inverse_relationships.count, "Follower") %>
+  </div>
+
 </div>
 
 
-<div container>
-  <div class="col-md-3">
-  </div>
-  <div class="col-md-8">
-    <% @user.tweets.each do |tweet| %>
-      <div class="list-group">
-        <a href=<%= tweet_path(tweet) %> class="list-group-item">
-
-              <h4 class="list-group-item-heading"><%= tweet.user.name %> <span class = "username-text"><%= tweet.user.username %></span></h4>
-              <p class="list-group-item-text">
-              <%= tweet.message %>
+<div class = "multi-tweet-container">
+  <% @user.tweets.reverse.each do |tweet| %>
+    <div class="list-group">
+      <div href=<%= tweet_path(tweet) %> class="list-group-item">
+        <div class="row">
+          <div class="col-md-2">
+            <% if tweet.user.avatar.exists? %>
+              <%= link_to image_tag(tweet.user.avatar.url, class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
+            <% else %>
+              <%= link_to image_tag("avatar_placeholder.jpg", class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
+            <% end %>
+          </div>
+          <div class="col-md-10">
+            <h4 class="list-group-item-heading"><%= tweet.user.name %> <span class = "username-text"><%= tweet.user.username %></span></h4>
+            <p class="list-group-item-text">
+              <%= link_to tweet.message, tweet_path(tweet)  %>
+              <% if current_user.likes?(tweet)%>
+                <%= link_to "Unlike", tweet_like_path(tweet), method: :delete, class: "like-button pull-right btn btn-success" %><br /><br />
+              <% else %>
+                <%= link_to "Like", tweet_like_path(tweet), method: :post, class: "like-button pull-right btn btn-default" %><br /><br />
+              <% end %>
               <% if tweet.pic.exists? %>
                  <br /><br /><%= image_tag tweet.pic.url, class:"img-responsive img-rounded"%>
               <% end %>
-              </p>
-
-        </a>
+            </p>
+          </div>
+        </div>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

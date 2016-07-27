@@ -14,8 +14,28 @@
   </div>
 
   <div class="form-group">
+   <%= f.text_field :name, autofocus: true, placeholder: "First and Last Name"%>
+ </div>
+
+ <div class="form-group">
+   <%= f.label "Your username should start with '@' and should not include spaces:" %><br />
+   <%= f.text_field :username, autofocus: true, placeholder: "@Username" %>
+ </div>
+
+ <div class="form-group">
+   <%= f.label "Where do you live?" %><br />
+   <%= f.text_field :location, placeholder: "Raleigh, North Carolina" %>
+ </div>
+
+  <div class="form-group">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <div class="form-group">
+    <br />
+    <%= f.label "Bio" %><br />
+    <%= f.text_area :bio, placeholder: "Your bio here!", rows:5 %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
