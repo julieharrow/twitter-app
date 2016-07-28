@@ -32,6 +32,7 @@ body {
 
 .like-button {
   margin:5px;
+  color:#FD3E81;
 }
 
 .nav-override {
@@ -40,13 +41,16 @@ body {
   font-size: 16px;
 }
 
-.profile-header {
-  margin-bottom:100px;
+.jumbo-override {
+  margin-bottom: 0px;
 }
 
 .profile-banner {
   background-color:#FCD3DE;
-  max-height:20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 30px;
+  min-height: 50px;
 }
 
 .avatar-thumbs {

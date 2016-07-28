@@ -22,9 +22,9 @@
             <p class="list-group-item-text">
               <%= link_to tweet.message, tweet_path(tweet)  %>
               <% if current_user.likes?(tweet)%>
-                <%= link_to "Unlike", tweet_like_path(tweet), method: :delete, class: "like-button pull-right btn btn-success" %><br /><br />
+                <%= link_to  " Unlike", tweet_like_path(tweet), method: :delete, class: "glyphicon glyphicon-heart pull-right like-button" %><br /><br />
               <% else %>
-                <%= link_to "Like", tweet_like_path(tweet), method: :post, class: "like-button pull-right btn btn-default" %><br /><br />
+                <%= link_to " Like", tweet_like_path(tweet), method: :post, class: "glyphicon glyphicon-heart pull-right" %><br /><br />
               <% end %>
               <% if tweet.pic.exists? %>
                  <br /><br /><%= image_tag tweet.pic.url, class:"img-responsive img-rounded"%>
