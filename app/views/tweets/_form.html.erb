@@ -1,7 +1,7 @@
 <%= form_for(@tweet) do |f| %>
   <% if @tweet.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@tweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
+      <h2><%= pluralize(@tweet.errors.count, "error") %> prohibited this trumpet from being saved:</h2>
 
       <ul>
         <% @tweet.errors.full_messages.each do |message| %>
@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.text_field :message, placeholder: "Your tweet here", size: 90%>
+    <%= f.text_field :message, placeholder: "Your trumpet here", size: 70%>
   </div>
 
   <div class="form-group">
@@ -25,6 +25,6 @@
   </div>
   <!-- # the following represents the submission - rails does not allow us to see that code - if I don't add the "Tweet!" then it will assume the following button label:  Submit Tweet " -->
   <div class="actions">
-    <%= f.submit "Tweet!", class:"btn btn-success" %>
+    <%= f.submit "Trumpet!", class:"btn btn-success" %>
   </div>
 <% end %>

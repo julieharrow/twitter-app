@@ -1,0 +1,105 @@
+<p id="notice"><%= notice %></p>
+<!-- # the above is just a necessary line in order to display any "completion" or "error" notice text as build in the controllers -->
+
+  <div class="jumbotron bio-banner jumbo-override">
+    <div class = "col-md-4">
+      <% if @user.avatar.exists? %>
+        <%= image_tag @user.avatar.url, class:"img-rounded img-responsive avatar-profile"%>
+      <% else %>
+        <%= image_tag "avatar_placeholder.jpg", class:"img-rounded img-responsive avatar-profile"%>
+      <% end %>
+    </div>
+    <% if @user==current_user %>
+      <%= link_to "Edit Profile", edit_user_registration_path, class:"btn btn-default pull-right" %>
+    <% end %>
+    <br /><br />
+
+    <h3 class="list-group-item-heading"><%= @user.name.titleize %> <br /><span class = "username-text"><%= @user.username.downcase %></span><br /><br /><span class = "timestamp-text"><%= @user.created_at.strftime("Joined %B %Y") %></span></h3>
+    <div class=" container list-group-item-text"> <%= @user.bio %> </div>
+  </div>
+
+<div class="jumbotron profile-banner jumbo-override">
+  <div class = "col-md-3">
+    <% if current_user != @user && !current_user.friends.include?(@user)  %>
+      <%= link_to "Follow #{@user.username}", relationships_path(friend_id: @user), method: :post, class:"btn btn-default username-text" %>
+    <% elsif current_user != @user && current_user.friends.include?(@user) %>
+      <%= link_to "Unfollow #{@user.username}", relationship_path(current_user.relationships.find_by_friend_id(@user)), method: :delete, class:"btn btn-success username-text", id:"unfollow_btn" %>
+    <% end %>
+  </div>
+
+  <div class = "col-md-3">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-modal-following"><%= @user.relationships.count %> Following</button>
+    <div class="modal fade bs-modal-following" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <h4>Users You Follow: </h4>
+          <% @user.friends.uniq.each do |friend| %>
+          <%= friend.username %><br />
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class = "col-md-3">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-modal-tweets"><%= pluralize(@user.tweets.count, "Tweet") %></button>
+    <div class="modal fade bs-modal-tweets" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <% @user.friends.distinct.uniq.each do |friend| %>
+          <%= friend.username %><br />
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class = "col-md-3">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-modal-follower"><%= pluralize(@user.inverse_relationships.count, "Follower") %></button>
+    <div class="modal fade bs-modal-follower" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <h4>Your Followers: </h4>
+          <% @user.inverse_friends.uniq.each do |friend| %>
+          <%= friend.username %><br />
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class = "multi-tweet-container">
+  <% @user.tweets.reverse.each do |tweet| %>
+    <div class="list-group">
+      <div href=<%= tweet_path(tweet) %> class="list-group-item">
+        <div class="row">
+          <div class="col-md-2">
+            <% if tweet.user.avatar.exists? %>
+              <%= link_to image_tag(tweet.user.avatar.url, class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
+            <% else %>
+              <%= link_to image_tag("avatar_placeholder.jpg", class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
+            <% end %>
+          </div>
+          <div class="col-md-10">
+            <h4 class="list-group-item-heading"><%= tweet.user.name %> <span class = "username-text"><%= tweet.user.username %></span></h4>
+            <p class="list-group-item-text">
+              <%= link_to tweet.message, tweet_path(tweet)  %>
+
+              <% if current_user.likes?(tweet)%>
+                <%= link_to  " Unlike", tweet_like_path(tweet), method: :delete, class: "glyphicon glyphicon-heart pull-right like-button" %><br /><br />
+              <% else %>
+                <%= link_to " Like", tweet_like_path(tweet), method: :post, class: "glyphicon glyphicon-heart pull-right" %><br /><br />
+              <% end %>
+
+              <% if tweet.pic.exists? %>
+                 <br /><br /><%= image_tag tweet.pic.url, class:"img-responsive img-rounded"%>
+              <% end %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

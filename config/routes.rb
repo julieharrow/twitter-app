@@ -8,13 +8,15 @@ Rails.application.routes.draw do
 
   # here are the paths for specific user profiles/a list of all users
   get "profiles/:id" => "profiles#show", as: :profile
+  # this one is different because it requires a user's ID, but when we pass someone to a profile page, we will type 'profile_path(params(id[]))' - but that is referencing the 'profiles' controller
   get "profiles" => "profiles#index"
+  get "feed" => "profiles#feed"
 
-  # relationships routes made automatically via rails
+  # relationships RESTful routes made automatically via rails
   resources :relationships, only: [:create,:destroy]
 
   resources :tweets do #this single line replaces all the tweet paths written below
-    resource :like, only: [:create, :destroy] #singular 'resource' avoids building the index path
+    resource :like, only: [:create, :destroy] #singular 'resource' avoids building the index path. When passing two CRUD verbs, you need to pass them as an array.
   end  #likes routes are nested from the tweet paths
 
 

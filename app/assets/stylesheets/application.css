@@ -31,8 +31,11 @@ body {
 }
 
 .like-button {
-  margin:5px;
   color:#FD3E81;
+}
+
+.nav-avatar {
+  height: 60px;
 }
 
 .nav-override {
@@ -66,15 +69,32 @@ body {
   margin-right:35px;
 }
 
-.username-text {
-  color:gray;
-  font-style: italic;
-  font-weight: lighter;
-  font-size: 14px;
+.unfollow {
+  background-color: #F0F8EA;
+  color:#FD3E81;
+  font-size: 10px;
+  font-weight: bold;
+  margin:20px 0px;
+}
+
+.follow {
+  background-color: #FCD3DE;
+  color:#FD3E81;
+  font-size: 10px;
+  font-weight: bold;
+  margin:20px 0px;
+}
+
+.counter-text {
+  font-weight:bold;
+}
+
+.bio-text {
+  font-weight:normal;
 }
 
 .timestamp-text {
   color:gray;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 10px;
 }

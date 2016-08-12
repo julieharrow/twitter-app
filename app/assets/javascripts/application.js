@@ -14,3 +14,16 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+$(document).ready(function(){               //whenever the page loads...
+  $('#unfollow_btn').hover(function(){      //cursor hovers on something with the #unfollow-btn
+    $(this).removeClass('follow');     //do these things to the #unfollow-btn
+    $(this).addClass('unfollow');
+    $(this).html('Unfollow');
+  }, function(){
+    $(this).html('Following');
+    $(this).removeClass('unfollow');
+    $(this).addClass('follow');
+  });
+});

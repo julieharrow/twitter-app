@@ -1,0 +1,106 @@
+<div class="row">
+  <div class= "col-xs-3 panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <% if current_user.avatar.exists? %>
+          <%=image_tag(current_user.avatar.url(:medium), class:"img-rounded img-responsive")%>
+        <% else %>
+          <%=image_tag("avatar_placeholder.jpg", class:"img-rounded img-responsive")%>
+        <% end %>
+        <h3><%= current_user.name %></h3>
+        <h5><%= current_user.username %></h5>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <span class="small text">TWEETS</span><br />
+          <div data-toggle="modal" data-target=".tweet-modal">
+            <%= current_user.tweets.count %>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <span class="small text">FOLLOWING</span><br />
+          <div data-toggle="modal" data-target=".following-modal">
+            <%= current_user.relationships.count %>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <span class="small text">FOLLOWERS</span><br />
+          <div data-toggle="modal" data-target=".followers-modal">
+            <%= current_user.inverse_relationships.count %>
+          </div>
+        </div>
+      </div>
+      <h5><p><%= current_user.bio %></p></h5>
+      <h5><%= current_user.location %></h5>
+      <h5>Joined in <%= current_user.created_at.strftime("%B %Y") %></h5>
+    </div>
+    </div>
+    <div class= "col-xs-1"></div>
+
+    <div class= "col-xs-7 panel panel-default">
+      <div class="panel-body">
+        <div class="well well-lg">
+          <%= render 'tweets/form' %>
+        </div>
+        <% @tweets.each do |tweet|%>
+        <% if tweet.user.avatar.exists? %>
+          <%= link_to image_tag(tweet.user.avatar.url, class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
+        <% else %>
+          <%= link_to image_tag("avatar_placeholder.jpg", class:"img-rounded img-responsive avatar-thumbs"), profile_path(tweet.user.id)%>
+        <% end %>
+        <strong><%= tweet.user.username %> </strong><small>tweeted <%= time_ago_in_words(tweet.created_at) %> ago</small>
+        <br />
+        <br />
+        <%= tweet.message %>
+        <br />
+        <br />
+        <% if current_user.likes?(tweet) %>
+          <%= link_to tweet_like_path(tweet), method: :delete do %>
+            <i class="glyphicon glyphicon-heart like-button"> </i>
+          <% end %>
+
+          <% else %>
+            <%= link_to tweet_like_path(tweet), method: :post do %>
+            <i class="glyphicon glyphicon-heart"> </i>
+          <% end %>
+        <% end %>
+        <br />
+        <hr>
+        <% end %>
+      </div>
+
+  </div>
+</div>
+
+
+
+
+<div class="modal fade tweet-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <% current_user.tweets.each do |tweet| %>
+        <%= tweet.message %><br />
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade followers-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <% current_user.inverse_relationships.each do |relationship| %>
+        <%= relationship.user_id %><br />
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade following-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <% current_user.relationships.each do |relationship| %>
+        <%= relationship.user_id %><br />
+      <% end %>
+    </div>
+  </div>
+</div>
